@@ -1,7 +1,10 @@
 {
   "name": "ng-alphabet-xp",
   "nativescript": {
-    "id": "org.nativescript.ngalphabetxp"
+    "id": "org.nativescript.ngalphabetxp",
+    "tns-android": {
+      "version": "6.1.1"
+    }
   },
   "version": "0.0.0",
   "scripts": {
