@@ -21,5 +21,6 @@ export class HomeComponent implements OnInit {
 
   onTapCreditsButton(){
     console.log(`Credits button tapped`);
+    this.routerExtensions.navigate(["credits"]);
   }
 }
