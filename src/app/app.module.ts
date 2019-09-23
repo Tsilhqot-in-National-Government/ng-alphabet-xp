@@ -6,6 +6,7 @@ import { AppComponent } from '@src/app/app.component';
 import { HomeComponent } from '@src/app/home/home.component';
 import { TileComponent } from '@src/app/tile/tile.component';
 import { MenuComponent } from '@src/app/menu/menu.component';
+import { CreditsComponent } from '@src/app/credits/credits.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MenuComponent } from '@src/app/menu/menu.component';
     HomeComponent,
     TileComponent,
     MenuComponent,
+    CreditsComponent,
   ],
   imports: [
     BrowserModule,
