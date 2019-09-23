@@ -12,4 +12,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onTapMenuButton(){
+    console.log(`Menu button tapped.`);
+  }
+
+  onTapCreditsButton(){
+    console.log(`Credits button tapped`);
+  }
 }
