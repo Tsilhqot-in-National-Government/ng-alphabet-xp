@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-tile',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tile.component.css']
 })
 export class TileComponent implements OnInit {
+  public currentTileNumber: String;
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe((params)=>{
+      this.currentTileNumber = params["number"];
+    })
+   }
 
   ngOnInit() {
   }
