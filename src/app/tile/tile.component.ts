@@ -103,15 +103,25 @@ export class TileComponent implements OnInit {
     this.imageSource = this.createImageSourceString(this.currentTileNumber);
   }
 
-  onTouchTile(args: TouchGestureEventData){
+  public onTouchTile(args: TouchGestureEventData){
     let tile: any= args.object;
     // percentage of tile occupied by letter-> will register a click on letter if within this distance from top of tile
-    let letterBottomBoundaryAsPercentage = 0.2; 
+    let letterBottomBoundaryAsPercentage = 0.265; 
     console.log(`You touched the tile at point: ${args.getX()},${args.getY()}`);
     console.log(`Screen scale: ${this.screenScale}`);
     console.log(`Card width: ${tile.getMeasuredWidth()/this.screenScale}`);
+    let cardHeight: number = tile.getMeasuredHeight()/this.screenScale;
     console.log(`Card height: ${tile.getMeasuredHeight()/this.screenScale}`);
-    
+    this.classifyClick(args.getY(),letterBottomBoundaryAsPercentage,cardHeight);
+  }
+
+  private classifyClick(y: number, letterPercentage: number, cardHeight: number): string{
+    if(y<letterPercentage*cardHeight){
+      console.log(`Letter clicked`);
+      return "LETTER";
+    }
+    console.log(`Word clicked.`);
+    return "WORD";
   }
 
 }
