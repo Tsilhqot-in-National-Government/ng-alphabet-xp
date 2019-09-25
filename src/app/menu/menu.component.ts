@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
 
     console.log(`You tapped item number ${args.object.get('id')}`);
     console.log(`It's image source is from ${args.object.get('src')}`);
-    this.routerExtensions.navigate(["tile",args.object.get('id')]);
+    this.routerExtensions.navigate(["tile",Number(args.object.get('id'))]);
 
   }
 

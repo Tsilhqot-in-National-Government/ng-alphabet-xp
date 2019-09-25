@@ -1,2 +1,7 @@
-<Label text='"{{ currentTileNumber }}"+"tile"'></Label>
-<Image [src]="imageSource"></Image>
+<StackLayout>
+    <Image [src]="imageSource" (swipe)="onSwipeTile($event)"></Image>
+   <!-- <StackLayout orientation="horizontal">
+        <Image src="~/app/images/left_arrow.png" width=30%></Image>
+        <Image src="~/app/images/right_arrow.png" width=30%></Image>
+    </StackLayout> -->
+</StackLayout>
