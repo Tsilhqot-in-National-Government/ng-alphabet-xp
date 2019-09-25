@@ -1,7 +1,5 @@
-<StackLayout>
-    <Image [src]="imageSource" (swipe)="onSwipeTile($event)"></Image>
-   <!-- <StackLayout orientation="horizontal">
-        <Image src="~/app/images/left_arrow.png" width=30%></Image>
-        <Image src="~/app/images/right_arrow.png" width=30%></Image>
-    </StackLayout> -->
+
+<ActionBar title="Tŝilhqot’in Alphabet" class="action-bar"></ActionBar>
+<StackLayout id="mainLayout">
+    <Image [src]="imageSource" (swipe)="onSwipeTile($event)" ></Image>
 </StackLayout>
