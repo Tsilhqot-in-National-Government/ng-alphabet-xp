@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import { SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
+import { TouchGestureEventData } from "tns-core-modules/ui/gestures";
+import { screen } from "tns-core-modules/platform";
+import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
+
 
 @Component({
   selector: 'app-tile',
@@ -11,11 +15,13 @@ export class TileComponent implements OnInit {
   private totalNumberTiles: number;
   public currentTileNumber: number;
   public imageSource: string;
+  public screenScale: number;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe((params)=>{
       this.currentTileNumber = params["number"];
-    })
+    });
+    this.screenScale = screen.mainScreen.scale;
    }
 
   ngOnInit() {
@@ -95,6 +101,17 @@ export class TileComponent implements OnInit {
 
   private updateImage(){
     this.imageSource = this.createImageSourceString(this.currentTileNumber);
+  }
+
+  onTouchTile(args: TouchGestureEventData){
+    let tile: any= args.object;
+    // percentage of tile occupied by letter-> will register a click on letter if within this distance from top of tile
+    let letterBottomBoundaryAsPercentage = 0.2; 
+    console.log(`You touched the tile at point: ${args.getX()},${args.getY()}`);
+    console.log(`Screen scale: ${this.screenScale}`);
+    console.log(`Card width: ${tile.getMeasuredWidth()/this.screenScale}`);
+    console.log(`Card height: ${tile.getMeasuredHeight()/this.screenScale}`);
+    
   }
 
 }

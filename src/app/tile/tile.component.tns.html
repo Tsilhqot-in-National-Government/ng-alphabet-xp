@@ -1,5 +1,5 @@
 
 <ActionBar title="Tŝilhqot’in Alphabet" class="action-bar"></ActionBar>
 <StackLayout id="mainLayout">
-    <Image [src]="imageSource" (swipe)="onSwipeTile($event)" ></Image>
+    <Image [src]="imageSource" (swipe)="onSwipeTile($event)" (touch)="onTouchTile($event)"></Image>
 </StackLayout>
