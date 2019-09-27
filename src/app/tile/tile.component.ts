@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import { SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures";
 import { screen } from "tns-core-modules/platform";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
+import { AudioPlayer } from "@src/app/split-helpers/audio-player";
 
 
 @Component({
@@ -15,13 +15,14 @@ export class TileComponent implements OnInit {
   private totalNumberTiles: number;
   public currentTileNumber: number;
   public imageSource: string;
-  public screenScale: number;
+  public screenScale: number; 
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private audioPlayer: AudioPlayer) {
     this.activatedRoute.params.subscribe((params)=>{
       this.currentTileNumber = params["number"];
     });
     this.screenScale = screen.mainScreen.scale;
+    this.audioPlayer.playAudioFromFile("~/app/sounds/L01.mp3");
    }
 
   ngOnInit() {
