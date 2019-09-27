@@ -13,6 +13,7 @@ import { AudioPlayer } from "@src/app/split-helpers/audio-player";
 })
 export class TileComponent implements OnInit {
   private totalNumberTiles: number;
+
   public currentTileNumber: number;
   public imageSource: string;
   public screenScale: number; 
@@ -22,7 +23,7 @@ export class TileComponent implements OnInit {
       this.currentTileNumber = params["number"];
     });
     this.screenScale = screen.mainScreen.scale;
-    this.audioPlayer.playAudioFromFile("~/app/sounds/L01.mp3");
+
    }
 
   ngOnInit() {
@@ -40,6 +41,30 @@ export class TileComponent implements OnInit {
       return `~/app/images/p${n}.png`;
     }
   }
+
+  private createAudioSourceString (wordOrLetter: string, n: number): string{
+    let audioExtension: string = ".mp3";
+    wordOrLetter = wordOrLetter.toUpperCase();
+    let letterPrefix: string;
+    if(wordOrLetter === "WORD"){
+      letterPrefix = "S";
+    }
+    if(wordOrLetter === "LETTER"){
+      letterPrefix = "L";
+    }
+    // console.log(`${this.audioExtension}`);
+    return `~/app/sounds/${letterPrefix}${this.convertIntegersToTwoDigitString(n)}${audioExtension}`;
+  }
+
+  private convertIntegersToTwoDigitString(n: number): string{
+    if(Number.isInteger){
+      if(0<=n && n<=10){
+        return "0"+ String(n);
+      }
+      return String(n);
+    }
+  }
+
 
   onSwipeTile(args: SwipeGestureEventData){
     switch(args.direction){
@@ -106,6 +131,7 @@ export class TileComponent implements OnInit {
 
   public onTouchTile(args: TouchGestureEventData){
     let tile: any= args.object;
+    let regionClicked: string;
     // percentage of tile occupied by letter-> will register a click on letter if within this distance from top of tile
     let letterBottomBoundaryAsPercentage = 0.265; 
     console.log(`You touched the tile at point: ${args.getX()},${args.getY()}`);
@@ -113,7 +139,8 @@ export class TileComponent implements OnInit {
     console.log(`Card width: ${tile.getMeasuredWidth()/this.screenScale}`);
     let cardHeight: number = tile.getMeasuredHeight()/this.screenScale;
     console.log(`Card height: ${tile.getMeasuredHeight()/this.screenScale}`);
-    this.classifyClick(args.getY(),letterBottomBoundaryAsPercentage,cardHeight);
+    regionClicked = this.classifyClick(args.getY(),letterBottomBoundaryAsPercentage,cardHeight);
+    this.audioPlayer.playAudioFromFile(this.createAudioSourceString(regionClicked,this.currentTileNumber));
   }
 
   private classifyClick(y: number, letterPercentage: number, cardHeight: number): string{
