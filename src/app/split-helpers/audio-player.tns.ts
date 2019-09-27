@@ -1,6 +1,5 @@
 import { TNSPlayer } from 'nativescript-audio';
 import { Injectable } from '@angular/core';
-import { knownFolders, path, Folder, File } from "tns-core-modules/file-system";
 
 @Injectable({
     providedIn: 'root'
@@ -33,5 +32,5 @@ public playAudioFromFile(audioFilePath: string){
         this.player.playFromFile(playerOptions);
     } 
   }
-  
+
 }
