@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import { SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
-import { TouchGestureEventData } from "tns-core-modules/ui/gestures";
-import { screen } from "tns-core-modules/platform";
+import { SwipeGestureEventData, GestureEventData } from 'tns-core-modules/ui/gestures';
+import { TouchAction, TouchGestureEventData } from "tns-core-modules/ui/gestures";
+import { screen, isAndroid, isIOS } from "tns-core-modules/platform";
 import { AudioPlayer } from "@src/app/split-helpers/audio-player";
 
 
@@ -12,11 +12,13 @@ import { AudioPlayer } from "@src/app/split-helpers/audio-player";
   styleUrls: ['./tile.component.css']
 })
 export class TileComponent implements OnInit {
-  private totalNumberTiles: number;
+  private totalNumberTiles: number = 53;
 
   public currentTileNumber: number;
   public imageSource: string;
   public screenScale: number; 
+
+
 
   constructor(private activatedRoute: ActivatedRoute, private audioPlayer: AudioPlayer) {
     this.activatedRoute.params.subscribe((params)=>{
@@ -105,9 +107,9 @@ export class TileComponent implements OnInit {
   }
 
   private cyclicIncrement(n: number, max: number): number{
-    console.log(`decrementing ${n}`);
+    console.log(`incrementing ${n}`);
     let output: number= n;
-    if(output===max){
+    if(output==max){
       output=1;
     }else{
       output++;
@@ -116,8 +118,9 @@ export class TileComponent implements OnInit {
   }
 
   private cyclicDecrement(n: number, max: number): number{
+    console.log(`decrementing ${n}`);
     let output: number = n;
-    if(n===0){
+    if(n==1){ //
       output=max;
     }else{
       output--;
@@ -130,17 +133,58 @@ export class TileComponent implements OnInit {
   }
 
   public onTouchTile(args: TouchGestureEventData){
-    let tile: any= args.object;
+      let tile: any= args.object;
+      let regionClicked: string;
+      // percentage of tile occupied by letter-> will register a click on letter if within this distance from top of tile
+      let letterBottomBoundaryAsPercentage = 0.265; 
+      console.log(`You touched the tile at point: ${args.getX()},${args.getY()}`);
+      console.log(`Screen scale: ${this.screenScale}`);
+      console.log(`Card width: ${tile.getMeasuredWidth()/this.screenScale}`);
+      let cardHeight: number = tile.getMeasuredHeight()/this.screenScale;
+      console.log(`Card height: ${tile.getMeasuredHeight()/this.screenScale}`);
+      regionClicked = this.classifyClick(args.getY(),letterBottomBoundaryAsPercentage,cardHeight);
+      this.audioPlayer.playAudioFromFile(this.createAudioSourceString(regionClicked,this.currentTileNumber));
+  }
+
+  public onTapTile(args: GestureEventData){
+    let tile: any = args.object;
     let regionClicked: string;
-    // percentage of tile occupied by letter-> will register a click on letter if within this distance from top of tile
-    let letterBottomBoundaryAsPercentage = 0.265; 
-    console.log(`You touched the tile at point: ${args.getX()},${args.getY()}`);
-    console.log(`Screen scale: ${this.screenScale}`);
-    console.log(`Card width: ${tile.getMeasuredWidth()/this.screenScale}`);
-    let cardHeight: number = tile.getMeasuredHeight()/this.screenScale;
-    console.log(`Card height: ${tile.getMeasuredHeight()/this.screenScale}`);
-    regionClicked = this.classifyClick(args.getY(),letterBottomBoundaryAsPercentage,cardHeight);
+    // percentage of tile occupied by letter
+    // will register a click on letter if within this distance of top of tile and click on word otherwise
+    let letterBottomBoundaryAsPercentage = 0.265 //@TODO move this variable
+    let cardHeight: number = tile.getMeasuredHeight();
+    console.log(`Card width: ${tile.getMeasuredWidth()}`);
+    regionClicked = this.classifyClick(this.getTapY(args),letterBottomBoundaryAsPercentage,cardHeight);
+    console.log(`You tapped the screen at point: ${this.getTapX(args)},${this.getTapY(args)}`);
     this.audioPlayer.playAudioFromFile(this.createAudioSourceString(regionClicked,this.currentTileNumber));
+  }
+
+  private getTapX(e: GestureEventData){
+    if(isAndroid){
+      console.log(`Getting X for Android...`);
+      return e.android.getX(); //px
+    }
+    if(isIOS){
+      console.log(`Getting X for iOS...`);
+      // not yet tested on iOS..
+      // const loc = e.ios.locationInView(e.object.ios); //dp
+      // return loc.x;
+    }
+  }
+  
+
+  private getTapY(e: GestureEventData){
+    if(isAndroid){
+      console.log(`Getting Y for Android...`);
+      return e.android.getY(); //px
+    }
+    if(isIOS){
+      console.log(`Getting Y for iOS...`);
+      // not yet tested on iOS..
+      // const loc = e.ios.locationInView(e.object.ios);
+      // return loc.y; //dp
+      // @TODO convert to px for consistency with android
+    }
   }
 
   private classifyClick(y: number, letterPercentage: number, cardHeight: number): string{
