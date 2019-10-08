@@ -1,0 +1,32 @@
+#main-layout {
+    background-color: #330000;
+}
+
+image {
+    background-color: white;
+    stretch: aspectFit;
+}
+
+button { 
+    background-color: #b3b3b3; 
+    font-family: FontAwesome;
+    font-size: 24;
+}
+
+.h2{
+    color:#E12522;
+    font-size: 32;
+    horizontal-alignment: center;
+}
+
+#blakeCredit{
+    color:#E12522;
+    font-size: 24;
+    horizontal-alignment: center;
+}
+#main-layout{
+   /* background-image: url("~/TNG-logo-Pantone485+black.png"); */
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+}

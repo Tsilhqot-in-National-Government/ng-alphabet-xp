@@ -1,7 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<ActionBar [title]="title"></ActionBar>
-<StackLayout  class="p-20">
-    <Label text="This is {{ title }}!" class="h1 text-center" textWrap="true"></Label>
-    <Button text="Menu" (tap)="onTapMenuButton()"></Button>
-    <Button text="Credits" (tap)="onTapCreditsButton()"></Button>
-</StackLayout>
+    <ActionBar [title]="title"></ActionBar>
+
+<!-- GridLayout with image 4 times as big as the other elements (Title, play button, credits button, title page credit label) -->
+    <GridLayout rows="*,4*,*,*,*" id="main-layout" class="home-panel">
+        <Label row="0" id="myLabel" textWrap="true" text="Tŝilhqot'in Alphabet" class="h2"></Label>
+        <Image row="1" src="~/app/images/logo.png" stertch="aspectFill" ></Image>
+        <Button row="2" text="MENU" (tap)="onTapMenuButton()"></Button>
+        <Button row="3" text="CREDITS" (tap)="onTapCreditsButton()"></Button>
+        <Label row="4" id="blakeCredit" textWrap="true" text="Title Page by Blake Sellars" ></Label>
+    </GridLayout>

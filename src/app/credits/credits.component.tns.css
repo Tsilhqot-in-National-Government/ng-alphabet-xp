@@ -1,1 +1,15 @@
-/* Add mobile styles for the component here.  */
+.heading {
+    font-size: 32;
+}
+
+#app-credits {
+    font-size: 24;
+}
+
+#photo-credits {
+    font-size: 12;
+}
+
+#main-layout {
+    background-color: #ADD9FA;
+}
