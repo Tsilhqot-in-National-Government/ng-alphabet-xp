@@ -20,7 +20,7 @@ export const routes: Routes = [
     component: MenuComponent
   },
   {
-    path: 'tile/:number',
+    path: 'tile',
     component: TileComponent
   },
   {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterExtensions } from "nativescript-angular/router";
+import { Router } from '@angular/router';
+// import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
   selector: 'app-home',
@@ -9,18 +10,18 @@ import { RouterExtensions } from "nativescript-angular/router";
 export class HomeComponent implements OnInit {
   title = 'Tŝilhqot’in Alphabet';
 
-  constructor(private routerExtensions: RouterExtensions) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   onTapMenuButton(){
     console.log(`Menu button tapped.`);
-    this.routerExtensions.navigate(["menu"]);
+    this.router.navigateByUrl('/menu');
   }
 
   onTapCreditsButton(){
     console.log(`Credits button tapped`);
-    this.routerExtensions.navigate(["credits"]);
+    this.router.navigateByUrl('/credits');
   }
 }

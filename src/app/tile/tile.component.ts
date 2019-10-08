@@ -21,8 +21,9 @@ export class TileComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute, private audioPlayer: AudioPlayer) {
-    this.activatedRoute.params.subscribe((params)=>{
-      this.currentTileNumber = params["number"];
+    this.activatedRoute.queryParams.subscribe((params)=>{
+
+      this.currentTileNumber = params["currentTile"];
     });
     this.screenScale = screen.mainScreen.scale;
 
